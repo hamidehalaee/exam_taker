@@ -1,8 +1,10 @@
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
-from pydantic import list
-from . import utils, models, schemas
-from .database import SessionLocal, engine
+
+import models
+import schemas
+import utils
+from database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -40,14 +42,14 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
+@app.post("/users/{user_id}/items/", response_model=schemas.Exam)
 def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
+    user_id: int, item: schemas.UserCreate, db: Session = Depends(get_db)
 ):
     return utils.create_user_item(db=db, item=item, user_id=user_id)
 
 
-@app.get("/items/", response_model=list[schemas.Item])
+@app.get("/items/", response_model=list[schemas.Exam])
 def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     items = utils.get_items(db, skip=skip, limit=limit)
     return items

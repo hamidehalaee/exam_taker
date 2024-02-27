@@ -1,10 +1,10 @@
 #models from Pydantic
-from pydantic import BaseModel, list
+from pydantic import BaseModel
 
 class UserBase(BaseModel):
     email: str
 
-class UserCreated(UserBase):
+class UserCreate(UserBase):
     password: str
 
 class Exam(BaseModel):
@@ -17,7 +17,7 @@ class User(UserBase):
     username: str
     password: str
     is_active: bool
-    items: list[Exam] = []
+    exams: list[Exam] = []
 
     class Config:
         orm_mode = True

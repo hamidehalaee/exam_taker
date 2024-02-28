@@ -11,7 +11,7 @@ class User(Base):
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
 
-    items = relationship("Exam", back_populates="owner")
+    exams = relationship("Exam", back_populates="owner")
 
 
 class Exam(Base):
@@ -23,3 +23,28 @@ class Exam(Base):
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     owner = relationship("User", back_populates="exams")
+
+
+class Question(Base):
+    __tablename__:str = "question"
+
+    id = Column(Integer, primary_key=True)
+    text = Column(String, index=True)
+    options = relationship("Option", back_populates="question")
+
+
+class Option(Base):
+    __tablename__ = "option"
+
+    id = Column(Integer, primary_key=True, index=True)
+    text = Column(String)
+    question_id = Column(Integer, ForeignKey("question.id"))
+    question = relationship("Question", back_populates="option")
+
+
+class Submission(base):
+    __tablename__: str = "submission"
+
+    username = Column(String, index=True)
+    exam_id = Column(Integer, ForeignKey("exam.id"))
+    answers = relationship("Answer", back_populates="submission")

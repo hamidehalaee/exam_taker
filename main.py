@@ -51,5 +51,5 @@ def create_item_for_user(
 
 @app.get("/items/", response_model=list[schemas.Exam])
 def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = utils.get_items(db, skip=skip, limit=limit)
-    return items
+    exams = utils.get_exams(db, skip=skip, limit=limit)
+    return exams

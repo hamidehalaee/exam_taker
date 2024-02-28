@@ -1,8 +1,7 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-
 from sqlalchemy.orm import *
-# from .database import Base
 from database import Base
+
 
 class User(Base):
     __tablename__ = "users"
@@ -16,7 +15,6 @@ class User(Base):
 
 
 class Exam(Base):
-
     __tablename__: str = "exams"
 
     id = Column(Integer, primary_key=True)
